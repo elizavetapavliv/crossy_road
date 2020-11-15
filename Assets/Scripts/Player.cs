@@ -53,7 +53,6 @@ public class Player : MonoBehaviour
 
                 MovePlayer(new Vector3(1, 0, 0));
 
-                //ANOTHER SCRIPT
                 terrainPool.GenerateTerrain(transform.position);
 
                 score++;
@@ -90,16 +89,8 @@ public class Player : MonoBehaviour
         transform.GetChild(0).DOLocalJump(transform.GetChild(0).localPosition, jumpHeight, 1, jumpDuration)
             .OnComplete(() => isHopping = false);
         transform.DOMove(transform.position + translation, 0);
-        //animator.SetTrigger("hop");
         isHopping = true;
-
-        //  transform.position += translation;
     }
-    //private void FinishHopping()
-    //{
-    //    isHopping = false;
-    //}
-
     private void CheckSteps(int steps, int maxValue)
     {
         if (steps == maxValue)
@@ -115,7 +106,6 @@ public class Player : MonoBehaviour
             transform.DOScale(new Vector3(transform.localScale.x, transform.localScale.y, diedScale), 0);
         }
         isDead = true;
-        //Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)

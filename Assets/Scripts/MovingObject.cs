@@ -36,24 +36,11 @@ public class MovingObject : MonoBehaviour
         {
             gameObject.SetActive(false);
             transform.DOMoveZ(initialPosition.z, 0);
-            //DOTween.Kill(transform);
         }
-
-        //TODO DoTween
        
-        var init = transform.position;
-        // var x = transform.DOMove(init + Vector3.right * speed, 0);
-        //transform.DOMove(init + new Vector3(1, 0, 1) * speed, 0);
-       // transform.DOMoveZ(transform.position.z + direction * Vector3.forward.z * speed, 0);
-        // transform.Translate(Vector3.right * speed);
         if (isLog && passanger != null)
         {
-            // var t = passanger.transform.DOMoveZ(transform.position.z, 0);
-
              passanger.transform.DOMoveZ(transform.position.z + passanger.zOffset, 0);
-       //     passanger.transform.position = new Vector3(passanger.transform.position.x,
-       //passanger.transform.position.y, transform.position.z + passanger.zSteps);
-
         }
     }
     public void StartMoving()
