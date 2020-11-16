@@ -17,7 +17,7 @@ Player can bump into cars and trees and jump on logs.
 ## Third Scene
 
 Results screen. Shows last score, coins and best score saved between sessions. 
-Two buttons: for restarting game and muting / unmuting sound. Sound state saved between sessions
+Two buttons: for restarting game and muting / unmuting sound. Sound state saved between sessions.
 
 <img src="https://github.com/elizavetapavliv/crossy_road/blob/main/Screenshots/image4.png" width="20%" />
 
