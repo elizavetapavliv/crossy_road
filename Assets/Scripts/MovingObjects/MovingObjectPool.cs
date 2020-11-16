@@ -1,6 +1,4 @@
-﻿using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class MovingObjectPool : MonoBehaviour
@@ -9,57 +7,28 @@ public class MovingObjectPool : MonoBehaviour
     private List<GameObject> movingObjectsPrefabs = default;
 
     [SerializeField]
-    private Transform positionOnTerrain = default;
-
-    [SerializeField]
-    private float minWaitingTime = default;
-
-    [SerializeField]
-    private float maxWaitingTime = default;
-
-    [SerializeField]
     private int poolSize = default;
+
+    [SerializeField]
+    private string type = default;
 
     private List<MovingObject> pool;
 
-    private List<MovingObject> movingObjects;
+    public static Dictionary<string, MovingObjectPool> instances 
+        = new Dictionary<string, MovingObjectPool>();
 
     private void Start()
     {
+        instances[type] = this;
         pool = new List<MovingObject>(poolSize);
-        movingObjects = new List<MovingObject>();
+        
         for (int i = 0; i < poolSize; i++)
         {
             pool.Add(CreateMovingObject());
         }
-        StartCoroutine("ActivateMovingObject");
     }
-    private IEnumerator ActivateMovingObject()
-    {
-        while (true)
-        {
-            var timeToWait = Random.Range(minWaitingTime, maxWaitingTime);
-            yield return new WaitForSeconds(timeToWait);
-
-            var movingObject = GetPooledObject();
-            if(movingObject != null) 
-            {
-                movingObjects.Add(movingObject);
-                movingObject.gameObject.SetActive(true);
-                if (movingObject.isUsed)
-                {
-                    var newPosition = new Vector3(transform.position.x,
-                        movingObject.transform.position.y, movingObject.initialPosition.z);
-                    movingObject.transform.DOMove(newPosition, 0);
-                    movingObject.initialPosition = newPosition;
-                    movingObject.transform.DOComplete();
-                    movingObject.StartMoving();
-                }
-            }
-        } 
-    }
-
-    private MovingObject GetPooledObject()
+    
+    public MovingObject GetPooledObject()
     {
         for (int i = 0; i < poolSize; i++)
         {
@@ -78,20 +47,8 @@ public class MovingObjectPool : MonoBehaviour
         {
             objectType = Random.Range(0, movingObjectsPrefabs.Count);
         }
-        var newObject = Instantiate(movingObjectsPrefabs[objectType], positionOnTerrain.position,
-           Quaternion.Euler(0, positionOnTerrain.localEulerAngles.y, 0)).GetComponent<MovingObject>();
-        newObject.direction = positionOnTerrain.localEulerAngles.y == 90 ? -1 : 1;
+        var newObject = Instantiate(movingObjectsPrefabs[objectType]).GetComponent<MovingObject>();
         newObject.gameObject.SetActive(false);
         return newObject;
-    }
-
-    public void StopMoving()
-    {
-        foreach (var movingObject in movingObjects)
-        {
-            movingObject.StopMoving();
-            movingObject.transform.DOComplete();
-        }
-        movingObjects.Clear();
     }
 }

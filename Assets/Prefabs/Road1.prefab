@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 38043825302199054}
   m_Layer: 0
-  m_Name: Car Position
+  m_Name: Transport Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,8 @@ GameObject:
   - component: {fileID: 1871729794506309114}
   - component: {fileID: 3049584755388501098}
   - component: {fileID: 8600359655778389327}
-  - component: {fileID: 38043824094373310}
+  - component: {fileID: 2608218318941821120}
+  - component: {fileID: -4213326089371791174}
   m_Layer: 0
   m_Name: Road1
   m_TagString: Untagged
@@ -125,7 +126,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &38043824094373310
+--- !u!114 &2608218318941821120
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,13 +135,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 5924415797813008327}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d82277fd106ff6469c4a74761bf5bd7, type: 3}
+  m_Script: {fileID: 11500000, guid: fb6f36081fae5b742af3c5e7d525942a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movingObjectsPrefabs:
-  - {fileID: 1000013461476850, guid: d863ff2fe81f33f409837a143f1c5deb, type: 3}
-  - {fileID: 1977796281193266, guid: c03d7a141f014664fa3e50871bc681a8, type: 3}
-  positionOnTerrain: {fileID: 38043825302199054}
   minWaitingTime: 4
   maxWaitingTime: 6
-  poolSize: 10
+  positionOnTerrain: {fileID: 38043825302199054}
+  offset: 10
+--- !u!114 &-4213326089371791174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5924415797813008327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6999a740e20e26439728d8d0025b843, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minCount: 0
+  maxCount: 2

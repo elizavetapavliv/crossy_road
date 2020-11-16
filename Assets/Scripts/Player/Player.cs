@@ -7,7 +7,7 @@ using System.Collections;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    private TerrainPool terrainPool = default;
+    private TerrainGenerator terrainGenerator = default;
 
     [SerializeField]
     private float jumpHeight = default;
@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
 
                 MovePlayer(new Vector3(1, 0, 0));
 
-                terrainPool.GenerateTerrain(transform.position);
+                terrainGenerator.GenerateTerrain(transform.position);
 
                 score++;
                 scoreText.text = score.ToString();

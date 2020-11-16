@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 5190118980837863502}
   - component: {fileID: 1517661473696854379}
   - component: {fileID: -7898040065863951043}
-  - component: {fileID: 7998362198354576414}
   - component: {fileID: -8456929134936201150}
+  - component: {fileID: 2816169222799131004}
   m_Layer: 0
   m_Name: Water1
   m_TagString: Untagged
@@ -111,24 +111,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitAudio: {fileID: 8300000, guid: cc591548c67d2be4cace8559706e9e4e, type: 3}
   waterAudio: {fileID: 8300000, guid: 567e72a8ff68eeb45b45063b6806974a, type: 3}
---- !u!114 &7998362198354576414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3486503392361180131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d82277fd106ff6469c4a74761bf5bd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movingObjectsPrefabs:
-  - {fileID: 7781207291408391555, guid: 215021f5bd4bf9f46a4d3312ee3707a4, type: 3}
-  positionOnTerrain: {fileID: 8086817328078666587}
-  minWaitingTime: 2
-  maxWaitingTime: 3
-  poolSize: 10
 --- !u!82 &-8456929134936201150
 AudioSource:
   m_ObjectHideFlags: 0
@@ -225,6 +207,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2816169222799131004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3486503392361180131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb6f36081fae5b742af3c5e7d525942a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minWaitingTime: 1.5
+  maxWaitingTime: 3
+  positionOnTerrain: {fileID: 8086817328078666587}
+  offset: 10
 --- !u!1 &5775552602623789557
 GameObject:
   m_ObjectHideFlags: 0

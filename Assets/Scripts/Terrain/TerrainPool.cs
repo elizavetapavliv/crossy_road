@@ -1,48 +1,42 @@
-﻿using DG.Tweening;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class TerrainPool : MonoBehaviour
 {
     [SerializeField]
-    private List<TerrainData> terrainData = default;
-
-    [SerializeField]
-    private int terrainPoolSize = default;
-
-    [SerializeField]
     private Transform terrainTransform = default;
 
     [SerializeField]
-    private int startGrassCount = default;
+    private List<TerrainData> terrainData = default;
 
-    [SerializeField]
-    private int countToSeePlayer = default;
+    private List<GameObject> pool;
 
-    [SerializeField]
-    private float distanceWithPlayer = default;
+    public Vector3 currentPosition;
 
-    private Vector3 currentPosition;
+    public int terrainPoolSize = default;
 
-    private List<GameObject> terrain;
+    public int startGrassCount = default;
 
-    private int currentIndex;
+    public int countToSeePlayer = default;
+
+    public static TerrainPool instance;
 
     private void Start()
     {
+        instance = this;
+        pool = new List<GameObject>(terrainPoolSize);
         currentPosition = Vector3.zero;
-        terrain = new List<GameObject>(terrainPoolSize);
 
         var range = CreateTerrains(0, startGrassCount - countToSeePlayer, false);
-        terrain.AddRange(range);
+        pool.AddRange(range);
         range = CreateTerrains(0, countToSeePlayer, true);
-        terrain.AddRange(range);
-        while (terrain.Count < terrainPoolSize)
+        pool.AddRange(range);
+        while (pool.Count < terrainPoolSize)
         {
             AddTerrains();
         }
-        currentIndex = 0;
+        currentPosition.x = terrainPoolSize;
     }
 
 
@@ -55,46 +49,16 @@ public class TerrainPool : MonoBehaviour
     public void AddTerrains()
     {
         GenerateRandomTerrainParameters(out var terrainType, out var terrainCount);
+        terrainCount = Mathf.Min(terrainCount, terrainPoolSize - pool.Count);
 
         var range = CreateTerrains(terrainType, terrainCount, false);
-        var maxCanAdd = terrainPoolSize - terrain.Count;
-
-        if (range.Count > maxCanAdd)
-        {
-            range = range.Take(maxCanAdd).ToList();
-        }
-        terrain.AddRange(range);
-    }
-
-    public void GenerateTerrain(Vector3 playerPosition)
-    {
-        if (currentPosition.x - playerPosition.x < distanceWithPlayer)
-        {
-            terrain[currentIndex].transform.DOMove(currentPosition, 0f);
-            terrain[currentIndex].transform.DOComplete();
-
-            var coinGenerator = terrain[currentIndex].GetComponent<CoinGenerator>();
-            if (coinGenerator)
-            {
-                coinGenerator.RegenerateCoins();
-            }
-
-            var movingObjectPool = terrain[currentIndex].GetComponent<MovingObjectPool>();
-            if (movingObjectPool) 
-            {
-                movingObjectPool.StopMoving();
-            }
-
-            currentPosition.x++;
-            currentIndex++;
-            currentIndex %= terrainPoolSize;
-        }
+        pool.AddRange(range);
     }
 
     private List<GameObject> CreateTerrains(int terrainType, int terrainCount, bool canBePlayer)
     {
         var terrains = new List<GameObject>();
-        for(int i = 0; i < terrainCount; i++)
+        for (int i = 0; i < terrainCount; i++)
         {
             int terrainDataType;
             if (canBePlayer)
@@ -105,11 +69,16 @@ public class TerrainPool : MonoBehaviour
             {
                 terrainDataType = Random.Range(0, terrainData[terrainType].terrainTypes.Count);
             }
-           
-            terrains.Add(Instantiate(terrainData[terrainType].terrainTypes[terrainDataType], 
-                currentPosition, Quaternion.identity, terrainTransform));
+            var newTerrain = Instantiate(terrainData[terrainType].terrainTypes[terrainDataType], 
+                currentPosition, Quaternion.identity, terrainTransform);
+            terrains.Add(newTerrain);
             currentPosition.x++;
         }
         return terrains;
+    }
+
+    public GameObject GetTerrain(int index)
+    {
+        return pool[index];
     }
 }

@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 4897665412463451480}
   - component: {fileID: 8094083193967815880}
   - component: {fileID: 3268247052606008813}
-  - component: {fileID: 6523059726161478940}
+  - component: {fileID: 373161178233908193}
+  - component: {fileID: 6299759325606747498}
   m_Layer: 0
   m_Name: Road2
   m_TagString: Untagged
@@ -95,7 +96,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6523059726161478940
+--- !u!114 &373161178233908193
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -104,16 +105,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 591792539302016869}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d82277fd106ff6469c4a74761bf5bd7, type: 3}
+  m_Script: {fileID: 11500000, guid: fb6f36081fae5b742af3c5e7d525942a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movingObjectsPrefabs:
-  - {fileID: 1000013461476850, guid: d863ff2fe81f33f409837a143f1c5deb, type: 3}
-  - {fileID: 1977796281193266, guid: c03d7a141f014664fa3e50871bc681a8, type: 3}
-  positionOnTerrain: {fileID: 6523059727637756844}
   minWaitingTime: 4
   maxWaitingTime: 6
-  poolSize: 10
+  positionOnTerrain: {fileID: 6523059727637756844}
+  offset: -10
+--- !u!114 &6299759325606747498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 591792539302016869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6999a740e20e26439728d8d0025b843, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minCount: 0
+  maxCount: 2
 --- !u!1 &6523059727637756843
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,7 +136,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6523059727637756844}
   m_Layer: 0
-  m_Name: Car Position
+  m_Name: Transport Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

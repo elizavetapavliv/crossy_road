@@ -22,30 +22,31 @@ public class MovingObject : MonoBehaviour
 
     private Player passanger;
 
-    public Vector3 initialPosition;
+    private Vector3 initialPosition;
 
     public int direction;
 
-    public bool isUsed = false;
+    public bool isUsed;
+
+    public float offset;
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        initialPosition = transform.position;
-        isUsed = true;
-        StartMoving();
+        isUsed = false;
     }
 
     private void Update()
     {
         var distance = Mathf.Abs(transform.position.z - initialPosition.z);
 
-        if (distance >= maxDistance)
+        if (distance >= maxDistance - Mathf.Abs(offset))
         {
             StopMoving();
             if(isLog && passanger != null)
             {
                 passanger.Die();
+                passanger = null;
             }
         }
 
@@ -63,12 +64,26 @@ public class MovingObject : MonoBehaviour
     }
     public void StartMoving()
     {
-        var time = Random.Range(minTime, maxTime);
-        transform.DOMoveZ(initialPosition.z + direction * maxDistance, time);
+        initialPosition = transform.position;
+        float time = minTime;
+        if (!isUsed)
+        {
+            initialPosition.z += offset;
+            transform.position = initialPosition;
+            transform.DOMoveZ(initialPosition.z + direction * maxDistance, time);
+            isUsed = true;
+        }
+        else
+        {
+            offset = 0f;
+            time = Random.Range(minTime, maxTime);
+            transform.DOMoveZ(initialPosition.z + direction * maxDistance, time);
+        }
     }
 
     public void StopMoving()
     {
+        transform.DOComplete();
         gameObject.SetActive(false);
     }
 

@@ -110,11 +110,7 @@ MonoBehaviour:
   maxTime: 35
   isLog: 1
   maxDistance: 40
-  middleX: 0
-  middleZ: 0
-  player: {fileID: 4040144417199264079, guid: 3dfa30378f4a2184cba388893b749849, type: 3}
-  hornAudio: {fileID: 0}
   movingAudio: {fileID: 0}
-  initialPosition: {x: 0, y: 0, z: 0}
   direction: 0
   isUsed: 0
+  offset: 0
