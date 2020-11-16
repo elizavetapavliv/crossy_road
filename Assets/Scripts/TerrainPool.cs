@@ -70,16 +70,24 @@ public class TerrainPool : MonoBehaviour
     {
         if (currentPosition.x - playerPosition.x < distanceWithPlayer)
         {
-            terrain[currentIndex].transform.DOMove(currentPosition, 0);
-            currentPosition.x++;
-            currentIndex++;
-            currentIndex %= terrainPoolSize;
+            terrain[currentIndex].transform.DOMove(currentPosition, 0f);
+            terrain[currentIndex].transform.DOComplete();
+
             var coinGenerator = terrain[currentIndex].GetComponent<CoinGenerator>();
             if (coinGenerator)
             {
                 coinGenerator.RegenerateCoins();
             }
 
+            var movingObjectPool = terrain[currentIndex].GetComponent<MovingObjectPool>();
+            if (movingObjectPool) 
+            {
+                movingObjectPool.StopMoving();
+            }
+
+            currentPosition.x++;
+            currentIndex++;
+            currentIndex %= terrainPoolSize;
         }
     }
 

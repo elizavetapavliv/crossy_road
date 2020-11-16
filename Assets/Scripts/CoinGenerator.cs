@@ -31,18 +31,23 @@ public class CoinGenerator : MonoBehaviour
             if (coin)
             {
                 coin.gameObject.SetActive(true);
-
-                coin.transform.DOMoveX(transform.localPosition.x, 0);
-                coin.transform.DOMoveZ(Random.Range(collider.bounds.min.z, collider.bounds.max.z), 0);
+                coin.transform.DOMove(new Vector3(transform.position.x,
+                   coin.transform.position.y, Random.Range(collider.bounds.min.z, collider.bounds.max.z)), 0);
+                coin.transform.DOComplete();
+                coins.Add(coin);
             }
         }
     }
 
     public void RegenerateCoins()
     {
+        var collider = GetComponent<Collider>();
         foreach (var coin in coins)
         {
             coin.gameObject.SetActive(false);
+            coin.transform.DOMove(new Vector3(transform.position.x,
+                  coin.transform.position.y, Random.Range(collider.bounds.min.z, collider.bounds.max.z)), 0);
+            coin.transform.DOComplete();
         }
         coins.Clear();
         GenerateCoins();

@@ -21,10 +21,14 @@ public class MovingObjectPool : MonoBehaviour
     private int poolSize = default;
 
     private List<MovingObject> pool;
+
+    private List<MovingObject> movingObjects;
+
     private void Start()
     {
         pool = new List<MovingObject>(poolSize);
-        for(int i = 0; i < poolSize; i++)
+        movingObjects = new List<MovingObject>();
+        for (int i = 0; i < poolSize; i++)
         {
             pool.Add(CreateMovingObject());
         }
@@ -40,10 +44,15 @@ public class MovingObjectPool : MonoBehaviour
             var movingObject = GetPooledObject();
             if(movingObject != null) 
             {
+                movingObjects.Add(movingObject);
                 movingObject.gameObject.SetActive(true);
                 if (movingObject.isUsed)
                 {
-                    movingObject.transform.DOMoveZ(movingObject.initialPosition.z, 0);
+                    var newPosition = new Vector3(transform.position.x,
+                        movingObject.transform.position.y, movingObject.initialPosition.z);
+                    movingObject.transform.DOMove(newPosition, 0);
+                    movingObject.initialPosition = newPosition;
+                    var c = movingObject.transform.DOComplete();
                     movingObject.StartMoving();
                 }
             }
@@ -74,5 +83,16 @@ public class MovingObjectPool : MonoBehaviour
         newObject.direction = positionOnTerrain.localEulerAngles.y == 90 ? -1 : 1;
         newObject.gameObject.SetActive(false);
         return newObject;
+    }
+
+    public void StopMoving()
+    {
+        foreach (var movingObject in movingObjects)
+        {
+            movingObject.StopMoving();
+            var c = movingObject.transform.DOComplete();
+            var k = movingObject.transform.DOKill();
+        }
+        movingObjects.Clear();
     }
 }

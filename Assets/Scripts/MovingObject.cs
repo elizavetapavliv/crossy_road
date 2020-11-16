@@ -15,6 +15,11 @@ public class MovingObject : MonoBehaviour
     [SerializeField]
     private float maxDistance = default;
 
+    [SerializeField]
+    private AudioClip movingAudio;
+
+    private AudioSource audioSource;
+
     private Player passanger;
 
     public Vector3 initialPosition;
@@ -25,6 +30,7 @@ public class MovingObject : MonoBehaviour
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         initialPosition = transform.position;
         isUsed = true;
         StartMoving();
@@ -32,15 +38,27 @@ public class MovingObject : MonoBehaviour
 
     private void Update()
     {
-        if (Mathf.Abs(transform.position.z - initialPosition.z) >= maxDistance)
+        var distance = Mathf.Abs(transform.position.z - initialPosition.z);
+
+        if (distance >= maxDistance)
         {
-            gameObject.SetActive(false);
-            transform.DOMoveZ(initialPosition.z, 0);
+            StopMoving();
+            if(isLog && passanger != null)
+            {
+                passanger.Die();
+            }
         }
-       
-        if (isLog && passanger != null)
+
+        if (isLog)
         {
-             passanger.transform.DOMoveZ(transform.position.z + passanger.zOffset, 0);
+            if (passanger != null)
+            {
+                passanger.transform.DOMoveZ(transform.position.z + passanger.zOffset, 0);
+            }
+        }
+        else
+        {
+            audioSource.PlayOneShot(movingAudio);
         }
     }
     public void StartMoving()
@@ -49,13 +67,18 @@ public class MovingObject : MonoBehaviour
         transform.DOMoveZ(initialPosition.z + direction * maxDistance, time);
     }
 
+    public void StopMoving()
+    {
+        gameObject.SetActive(false);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (isLog)
         {
-            var player = collision.collider.GetComponent<Player>();
-            passanger = player;
-            player.zOffset = 0;
+            var playerComponent = collision.collider.GetComponent<Player>();
+            passanger = playerComponent;
+            playerComponent.zOffset = 0;
         }
     }
 

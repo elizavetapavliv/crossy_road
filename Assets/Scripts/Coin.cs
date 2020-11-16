@@ -33,7 +33,8 @@ public class Coin : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.name.Contains("Player") || collider.gameObject.name.Contains("Tree") || collider.gameObject.name.Contains("Coin"))
+        if (collider.gameObject.name.Contains("Player") || collider.gameObject.name.Contains("Tree")
+            || collider.gameObject.name.Contains("Coin"))
         {
             gameObject.SetActive(false);
         }
