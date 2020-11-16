@@ -448,6 +448,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitAudio: {fileID: 8300000, guid: cc591548c67d2be4cace8559706e9e4e, type: 3}
   waterAudio: {fileID: 8300000, guid: 567e72a8ff68eeb45b45063b6806974a, type: 3}
+  volumeScale: 20
 --- !u!114 &-8912482073047338099
 MonoBehaviour:
   m_ObjectHideFlags: 0
