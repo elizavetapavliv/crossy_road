@@ -4,4 +4,5 @@
 public class PlayerPosition : ScriptableObject
 {
     public Vector3 position;
+    public bool isDied;
 }

@@ -108,6 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb6f36081fae5b742af3c5e7d525942a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPosition: {fileID: 11400000, guid: 6b070905764997b40b6e640be9a364de, type: 2}
   minWaitingTime: 4
   maxWaitingTime: 6
   positionOnTerrain: {fileID: 6523059727637756844}
@@ -124,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6999a740e20e26439728d8d0025b843, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPosition: {fileID: 11400000, guid: 6b070905764997b40b6e640be9a364de, type: 2}
   minCount: 0
   maxCount: 2
 --- !u!1 &6523059727637756843

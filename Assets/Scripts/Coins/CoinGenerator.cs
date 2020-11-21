@@ -5,6 +5,9 @@ using UnityEngine;
 public class CoinGenerator : MonoBehaviour
 {
     [SerializeField]
+    private PlayerPosition playerPosition;
+
+    [SerializeField]
     private int minCount;
 
     [SerializeField]
@@ -16,6 +19,14 @@ public class CoinGenerator : MonoBehaviour
     {
         coins = new List<Coin>();
         GenerateCoins();
+    }
+
+    private void Update()
+    {
+        if (playerPosition.isDied)
+        {
+            StopCoinsJumping();
+        }
     }
 
     private void GenerateCoins()
@@ -44,12 +55,21 @@ public class CoinGenerator : MonoBehaviour
         var collider = GetComponent<Collider>();
         foreach (var coin in coins)
         {
-            coin.gameObject.SetActive(false);
+            coin.StopJumping();
             coin.transform.DOMove(new Vector3(transform.position.x,
                   coin.transform.position.y, Random.Range(collider.bounds.min.z, collider.bounds.max.z)), 0);
             coin.transform.DOComplete();
         }
         coins.Clear();
         GenerateCoins();
+    }
+
+    private void StopCoinsJumping()
+    {
+        foreach (var coin in coins)
+        {
+            coin.StopJumping();
+        }
+        coins.Clear();
     }
 }

@@ -16,7 +16,7 @@ public class FollowPlayer : MonoBehaviour
 
     private void Update()
     { 
-        if (player != null)
+        if (player != null && player.transform != null)
         {
             transform.DOMoveX(player.transform.position.x + offset.x, 0);
             transform.DOMoveZ(player.transform.position.z + offset.z, 0);

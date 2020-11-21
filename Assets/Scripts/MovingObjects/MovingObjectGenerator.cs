@@ -6,6 +6,9 @@ using UnityEngine;
 public class MovingObjectGenerator : MonoBehaviour
 {
     [SerializeField]
+    private PlayerPosition playerPosition;
+
+    [SerializeField]
     private float minWaitingTime = default;
 
     [SerializeField]
@@ -26,7 +29,7 @@ public class MovingObjectGenerator : MonoBehaviour
 
     private IEnumerator ActivateMovingObject()
     {
-        while (true)
+        while (!playerPosition.isDied)
         {
             var timeToWait = Random.Range(minWaitingTime, maxWaitingTime);
             yield return new WaitForSeconds(timeToWait);
@@ -47,6 +50,7 @@ public class MovingObjectGenerator : MonoBehaviour
                 movingObject.StartMoving();
             }
         }
+        StopMoving();
     }
     public void StopMoving()
     {

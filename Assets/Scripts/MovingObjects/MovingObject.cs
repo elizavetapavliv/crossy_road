@@ -16,7 +16,7 @@ public class MovingObject : MonoBehaviour
     private float maxDistance = default;
 
     [SerializeField]
-    private AudioClip movingAudio;
+    private AudioClip movingAudio = default;
 
     private AudioSource audioSource;
 
@@ -30,36 +30,49 @@ public class MovingObject : MonoBehaviour
 
     public float offset;
 
+    private bool needToMove;
+
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
         isUsed = false;
+        needToMove = true;
     }
 
     private void Update()
     {
-        var distance = Mathf.Abs(transform.position.z - initialPosition.z);
+        if (needToMove)
+        {
+            var distance = Mathf.Abs(transform.position.z - initialPosition.z);
 
-        if (distance >= maxDistance - Mathf.Abs(offset))
-        {
-            StopMoving();
-            if(isLog && passanger != null)
+            if (distance >= maxDistance - Mathf.Abs(offset))
             {
-                passanger.Die();
-                passanger = null;
+                StopMoving();
+                if (isLog && passanger != null)
+                {
+                    passanger.Die();
+                }
             }
-        }
-
-        if (isLog)
-        {
-            if (passanger != null)
+            else
             {
-                passanger.transform.DOMoveZ(transform.position.z + passanger.zOffset, 0);
+                if (isLog)
+                {
+                    if (passanger != null)
+                    {
+                        if (passanger.transform != null)
+                        {
+                            passanger.transform.DOMoveZ(transform.position.z + passanger.zOffset, 0);
+                        }
+                    }
+                }
+                else
+                {
+                    if (!AudioListener.pause)
+                    {
+                        audioSource.PlayOneShot(movingAudio);
+                    }
+                }
             }
-        }
-        else
-        {
-            audioSource.PlayOneShot(movingAudio);
         }
     }
     public void StartMoving()
@@ -70,19 +83,26 @@ public class MovingObject : MonoBehaviour
         {
             initialPosition.z += offset;
             transform.position = initialPosition;
-            transform.DOMoveZ(initialPosition.z + direction * maxDistance, time);
+            if (transform != null)
+            {
+                transform.DOMoveZ(initialPosition.z + direction * maxDistance, time);
+            }
             isUsed = true;
         }
         else
         {
             offset = 0f;
             time = Random.Range(minTime, maxTime);
-            transform.DOMoveZ(initialPosition.z + direction * maxDistance, time);
+            if (transform != null)
+            {
+                transform.DOMoveZ(initialPosition.z + direction * maxDistance, time);
+            }
         }
     }
 
     public void StopMoving()
     {
+        needToMove = false;
         transform.DOComplete();
         gameObject.SetActive(false);
     }

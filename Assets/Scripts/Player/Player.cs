@@ -6,8 +6,11 @@ using System.Collections;
 
 public class Player : MonoBehaviour
 {
+    private const int MAX_SIDE_STEPS = 6;
+    private const int MAX_BACK_STEPS = 3;
+
     [SerializeField]
-    private PlayerPosition playerPosition;
+    private PlayerPosition playerPosition = default;
 
     [SerializeField]
     private TerrainGenerator terrainGenerator = default;
@@ -25,18 +28,18 @@ public class Player : MonoBehaviour
     private float diedScale = default;
 
     [SerializeField]
-    private Text scoreText;
+    private Text scoreText = default;
 
     [SerializeField]
-    private AudioClip coinAudio;
+    private AudioClip coinAudio = default;
 
     [SerializeField]
-    private AudioClip jumpAudio;
+    private AudioClip jumpAudio = default;
 
     [SerializeField]
-    private AudioClip gameOverAudio;
+    private AudioClip gameOverAudio = default;
 
-    private AudioSource audioSource;
+    private AudioSource audioSource = default;
 
     public bool isHopping;
 
@@ -49,6 +52,8 @@ public class Player : MonoBehaviour
     private bool isDied;
 
     private Vector3 initialChildPosition;
+
+    private Vector2 startTouch;
 
     public Vector3 currentDirection;
 
@@ -63,115 +68,80 @@ public class Player : MonoBehaviour
         coinsCount = PlayerPrefs.GetInt("coins");
         isDied = false;
         initialChildPosition = transform.GetChild(0).localPosition;
+        playerPosition.isDied = false;
     }
     private void Update()
     {
-        if (!isDied)
+        if (!isDied && Input.touchCount > 0 && !isHopping)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow) && !isHopping)
+            var touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
             {
-                currentDirection = new Vector3(1, 0, 0);
-                transform.DORotateQuaternion(Quaternion.Euler(0, 90, 0), 0);
-                MovePlayer(currentDirection, moveDuration);
-
-                terrainGenerator.GenerateTerrain(transform.position);
-
-                score++;
-                scoreText.text = score.ToString();
-                backSteps = 0;
-                sidesSteps = 0;
+                startTouch = touch.position;
             }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow) && !isHopping)
+            else if (touch.phase == TouchPhase.Moved)
             {
-                currentDirection = new Vector3(0, 0, 1);
-                zOffset++;
-                transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0);
-                MovePlayer(currentDirection, moveDuration);
-                sidesSteps++;
-                CheckSteps(sidesSteps, 6);
+                var delta = touch.position - startTouch;
+                if(Mathf.Abs(delta.y) > Mathf.Abs(delta.x))
+                {
+                    if(delta.y > 0)
+                    {
+                        currentDirection = new Vector3(1, 0, 0);
+                        transform.DORotateQuaternion(Quaternion.Euler(0, 90, 0), 0);
+                        MovePlayer(currentDirection, moveDuration);
+                        score++;
+                        scoreText.text = score.ToString();
+                        backSteps = 0;
+                        sidesSteps = 0;
 
-                backSteps = 0;
+                        terrainGenerator.GenerateTerrain(transform.position);
+                    }
+                    else
+                    {
+                        currentDirection = new Vector3(-1, 0, 0);
+                        transform.DORotateQuaternion(Quaternion.Euler(0, -90, 0), 0);
+                        backSteps++;
+                        CheckSteps(backSteps, MAX_BACK_STEPS);
+                        MovePlayer(currentDirection, moveDuration);
+                        sidesSteps = 0;
+                    }
+                }
+                else
+                {
+                    if (delta.x < 0)
+                    {
+                        currentDirection = new Vector3(0, 0, 1);
+                        zOffset++;
+                        transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0);
+                        MovePlayer(currentDirection, moveDuration);
+                        sidesSteps++;
+                        CheckSteps(sidesSteps, MAX_SIDE_STEPS);
+                        backSteps = 0;
+                    }
+                    else
+                    {
+                        currentDirection = new Vector3(0, 0, -1);
+                        zOffset--;
+                        transform.DORotateQuaternion(Quaternion.Euler(0, 180, 0), 0);
+                        MovePlayer(currentDirection, moveDuration);
+                        sidesSteps++;
+                        CheckSteps(sidesSteps, MAX_SIDE_STEPS);
+                        backSteps = 0;
+                    }
+                }
             }
-            else if (Input.GetKeyDown(KeyCode.RightArrow) && !isHopping)
-            {
-                currentDirection = new Vector3(0, 0, -1);
-                zOffset--;
-                transform.DORotateQuaternion(Quaternion.Euler(0, 180, 0), 0);
-                MovePlayer(currentDirection, moveDuration);
-                sidesSteps++;
-                CheckSteps(sidesSteps, 6);
-                backSteps = 0;
-                MovePlayer(currentDirection, moveDuration);
-
-            }
-            else if (Input.GetKeyDown(KeyCode.DownArrow) && !isHopping)
-            {
-                currentDirection = new Vector3(-1, 0, 0);
-                transform.DORotateQuaternion(Quaternion.Euler(0, -90, 0), 0);
-                backSteps++;
-                CheckSteps(backSteps, 3);
-                MovePlayer(currentDirection, moveDuration);
-                sidesSteps = 0;
-            }
-
-            //if (!isDied && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved && !isHopping)
-            //{
-            //    var position = Input.GetTouch(0).deltaPosition;
-            //    if (position.y > 0)
-            //    {
-            //        currentDirection = new Vector3(1, 0, 0);
-            //        transform.DORotateQuaternion(Quaternion.Euler(0, 90, 0), 0);
-            //        MovePlayer(currentDirection);
-
-            //        terrainGenerator.GenerateTerrain(transform.position);
-
-            //        score++;
-            //        scoreText.text = score.ToString();
-            //        backSteps = 0;
-            //        sidesSteps = 0;
-            //    }
-            //    else if (position.x < 0)
-            //    {
-            //        currentDirection = new Vector3(0, 0, 1);
-            //        zOffset++;
-            //        transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0);
-            //        MovePlayer(currentDirection);
-            //        sidesSteps++;
-            //        CheckSteps(sidesSteps, 6);
-
-            //        backSteps = 0;
-            //    }
-            //    else if (position.x > 0)
-            //    {
-            //        currentDirection = new Vector3(0, 0, -1);
-            //        zOffset--;
-            //        transform.DORotateQuaternion(Quaternion.Euler(0, 180, 0), 0);
-            //        MovePlayer(currentDirection);
-            //        sidesSteps++;
-            //        CheckSteps(sidesSteps, 6);
-            //        backSteps = 0;
-            //        MovePlayer(currentDirection);
-
-            //    }
-            //    else
-            //    {
-            //        currentDirection = new Vector3(-1, 0, 0);
-            //        transform.DORotateQuaternion(Quaternion.Euler(0, -90, 0), 0);
-            //        backSteps++;
-            //        CheckSteps(backSteps, 3);
-            //        MovePlayer(currentDirection);
-            //        sidesSteps = 0;
-            //    }
-            //}
         }
     }
 
     public void MovePlayer(Vector3 translation, float duration)
     {
-        var tw = transform.GetChild(0).DOLocalJump(initialChildPosition, jumpHeight, 1, jumpDuration)
+        transform.GetChild(0).DOLocalJump(initialChildPosition, jumpHeight, 1, jumpDuration)
             .OnComplete(() => isHopping = false);
-        
-        audioSource.PlayOneShot(jumpAudio);
+
+        if (!AudioListener.pause)
+        {
+            audioSource.PlayOneShot(jumpAudio);
+        }
 
         transform.DOMove(transform.position + translation, duration);
         isHopping = true;
@@ -188,8 +158,9 @@ public class Player : MonoBehaviour
     {
         isDied = true;
         transform.DOScale(new Vector3(transform.localScale.x, transform.localScale.y, diedScale), 0);
+        transform.GetChild(0).DOKill();
         transform.DOComplete();
-        
+
         SaveScoreAndCoins();
         if (!AudioListener.pause)
         {
@@ -197,7 +168,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("Result", LoadSceneMode.Additive);
+            LoadResultScene();
         }
        
     }
@@ -205,6 +176,12 @@ public class Player : MonoBehaviour
     {
         audioSource.PlayOneShot(gameOverAudio);
         yield return new WaitWhile(() => audioSource.isPlaying);
+        LoadResultScene();
+    }
+
+    private void LoadResultScene()
+    {
+        playerPosition.isDied = true;
         playerPosition.position = transform.position;
         SceneManager.LoadScene("Result", LoadSceneMode.Additive);
     }
@@ -239,7 +216,10 @@ public class Player : MonoBehaviour
         {
             coinsCount++;
             GetComponent<CoinsController>().SetNewCoinsCount(coinsCount);
-            audioSource.PlayOneShot(coinAudio);
+            if (!AudioListener.pause)
+            {
+                audioSource.PlayOneShot(coinAudio);
+            }
         }
     }
 }

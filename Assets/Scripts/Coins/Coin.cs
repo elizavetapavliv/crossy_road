@@ -16,14 +16,17 @@ public class Coin : MonoBehaviour
     [SerializeField]
     private float maxWaitingTime = default;
 
+    private bool needToJump;
+
     private void Start()
     {
+        needToJump = true;
         StartCoroutine("CoinJump");
     }
 
     private IEnumerator CoinJump()
     {
-        while (true)
+        while (needToJump)
         {
             var timeToWait = Random.Range(minWaitingTime, maxWaitingTime);
             yield return new WaitForSeconds(timeToWait);
@@ -31,12 +34,19 @@ public class Coin : MonoBehaviour
         }
     }
 
+    public void StopJumping()
+    {
+        needToJump = false;
+        transform.DOComplete();
+        gameObject.SetActive(false);
+    }
+
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.name.Contains("Player") || collider.gameObject.name.Contains("Tree")
             || collider.gameObject.name.Contains("Coin"))
         {
-            gameObject.SetActive(false);
+            StopJumping();
         }
     }
 }

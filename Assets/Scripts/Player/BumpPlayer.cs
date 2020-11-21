@@ -24,12 +24,18 @@ public class BumpPlayer : MonoBehaviour
         {
             if(gameObject.name.Contains("Water"))
             {
-                audioSource.PlayOneShot(waterAudio);
+                if (!AudioListener.pause)
+                {
+                    audioSource.PlayOneShot(waterAudio);
+                }
                 player.Die();
             }
             else if(!gameObject.name.Contains("Tree"))
             {
-                StartCoroutine("PlayAudio", hitAudio);
+                if (!AudioListener.pause)
+                {
+                    StartCoroutine("PlayAudio", hitAudio);
+                }
                 player.Die();
             }
 
@@ -41,8 +47,11 @@ public class BumpPlayer : MonoBehaviour
         player = collision.collider.GetComponent<Player>();
         if (gameObject.name.Contains("Tree"))
         {
-            StartCoroutine("MovePlayerBack");
-            StartCoroutine("PlayAudio", hitAudio);
+            if (!AudioListener.pause)
+            {
+                StartCoroutine("PlayAudio", hitAudio);
+            }
+            StartCoroutine("MovePlayerBack"); 
         }
     }
     private IEnumerator MovePlayerBack()
