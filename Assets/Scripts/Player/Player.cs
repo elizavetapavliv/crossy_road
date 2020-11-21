@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
             {
                 currentDirection = new Vector3(1, 0, 0);
                 transform.DORotateQuaternion(Quaternion.Euler(0, 90, 0), 0);
-                MovePlayer(currentDirection);
+                MovePlayer(currentDirection, moveDuration);
 
                 terrainGenerator.GenerateTerrain(transform.position);
 
@@ -83,7 +83,7 @@ public class Player : MonoBehaviour
                 currentDirection = new Vector3(0, 0, 1);
                 zOffset++;
                 transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0);
-                MovePlayer(currentDirection);
+                MovePlayer(currentDirection, moveDuration);
                 sidesSteps++;
                 CheckSteps(sidesSteps, 6);
 
@@ -94,11 +94,11 @@ public class Player : MonoBehaviour
                 currentDirection = new Vector3(0, 0, -1);
                 zOffset--;
                 transform.DORotateQuaternion(Quaternion.Euler(0, 180, 0), 0);
-                MovePlayer(currentDirection);
+                MovePlayer(currentDirection, moveDuration);
                 sidesSteps++;
                 CheckSteps(sidesSteps, 6);
                 backSteps = 0;
-                MovePlayer(currentDirection);
+                MovePlayer(currentDirection, moveDuration);
 
             }
             else if (Input.GetKeyDown(KeyCode.DownArrow) && !isHopping)
@@ -107,20 +107,70 @@ public class Player : MonoBehaviour
                 transform.DORotateQuaternion(Quaternion.Euler(0, -90, 0), 0);
                 backSteps++;
                 CheckSteps(backSteps, 3);
-                MovePlayer(currentDirection);
+                MovePlayer(currentDirection, moveDuration);
                 sidesSteps = 0;
             }
+
+            //if (!isDied && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved && !isHopping)
+            //{
+            //    var position = Input.GetTouch(0).deltaPosition;
+            //    if (position.y > 0)
+            //    {
+            //        currentDirection = new Vector3(1, 0, 0);
+            //        transform.DORotateQuaternion(Quaternion.Euler(0, 90, 0), 0);
+            //        MovePlayer(currentDirection);
+
+            //        terrainGenerator.GenerateTerrain(transform.position);
+
+            //        score++;
+            //        scoreText.text = score.ToString();
+            //        backSteps = 0;
+            //        sidesSteps = 0;
+            //    }
+            //    else if (position.x < 0)
+            //    {
+            //        currentDirection = new Vector3(0, 0, 1);
+            //        zOffset++;
+            //        transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0);
+            //        MovePlayer(currentDirection);
+            //        sidesSteps++;
+            //        CheckSteps(sidesSteps, 6);
+
+            //        backSteps = 0;
+            //    }
+            //    else if (position.x > 0)
+            //    {
+            //        currentDirection = new Vector3(0, 0, -1);
+            //        zOffset--;
+            //        transform.DORotateQuaternion(Quaternion.Euler(0, 180, 0), 0);
+            //        MovePlayer(currentDirection);
+            //        sidesSteps++;
+            //        CheckSteps(sidesSteps, 6);
+            //        backSteps = 0;
+            //        MovePlayer(currentDirection);
+
+            //    }
+            //    else
+            //    {
+            //        currentDirection = new Vector3(-1, 0, 0);
+            //        transform.DORotateQuaternion(Quaternion.Euler(0, -90, 0), 0);
+            //        backSteps++;
+            //        CheckSteps(backSteps, 3);
+            //        MovePlayer(currentDirection);
+            //        sidesSteps = 0;
+            //    }
+            //}
         }
     }
 
-    public void MovePlayer(Vector3 translation)
+    public void MovePlayer(Vector3 translation, float duration)
     {
         var tw = transform.GetChild(0).DOLocalJump(initialChildPosition, jumpHeight, 1, jumpDuration)
             .OnComplete(() => isHopping = false);
         
         audioSource.PlayOneShot(jumpAudio);
 
-        transform.DOMove(transform.position + translation, moveDuration);
+        transform.DOMove(transform.position + translation, duration);
         isHopping = true;
     }
     private void CheckSteps(int steps, int maxValue)

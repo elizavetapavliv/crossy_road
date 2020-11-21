@@ -49,7 +49,7 @@ public class BumpPlayer : MonoBehaviour
     private IEnumerator MovePlayerBack()
     {
         yield return new WaitWhile(() => player.isHopping);
-        player.MovePlayer(player.currentDirection * -1);
+        player.MovePlayer(player.currentDirection * -1, 0f);
     }
 
     private IEnumerator PlayAudio(AudioClip audio)
