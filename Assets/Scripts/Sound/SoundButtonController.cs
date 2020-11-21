@@ -14,6 +14,10 @@ public class SoundButtonController : MonoBehaviour
 
     private void Start()
     {
+        var onClickEvent = new Button.ButtonClickedEvent();
+        onClickEvent.AddListener(ToggleSound);
+        soundButton.onClick = onClickEvent;
+
         ChangeSprite(PlayerPrefs.GetString("sound"));
     }
 

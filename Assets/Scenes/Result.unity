@@ -411,18 +411,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 321863550}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4484029557363166578}
-        m_MethodName: ToggleSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
 --- !u!114 &321863550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -957,6 +946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b980fbe95d5effa43b60d11e4be3fa57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playButton: {fileID: 7949708762883987685}
 --- !u!114 &4484029557363166576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1094,18 +1084,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7949708762883987674}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4484029557363166575}
-        m_MethodName: OnClickPlay
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
 --- !u!1 &7949708762883987687
 GameObject:
   m_ObjectHideFlags: 0
