@@ -5,9 +5,12 @@ public class FollowLevelScene : MonoBehaviour
 {
     [SerializeField]
     private Vector3 offset = default;
+
+    [SerializeField]
+    private PlayerPosition playerPosition;
     private void Start()
-    {
-        transform.DOMove(new Vector3(PlayerPrefs.GetFloat("x"), 
-            0, PlayerPrefs.GetFloat("z")) + offset, 0);
+    { 
+        transform.DOMove(new Vector3(playerPosition.position.x, 
+            0, playerPosition.position.z) + offset, 0);
     }
 }

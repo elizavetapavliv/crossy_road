@@ -7,6 +7,9 @@ using System.Collections;
 public class Player : MonoBehaviour
 {
     [SerializeField]
+    private PlayerPosition playerPosition;
+
+    [SerializeField]
     private TerrainGenerator terrainGenerator = default;
 
     [SerializeField]
@@ -202,9 +205,7 @@ public class Player : MonoBehaviour
     {
         audioSource.PlayOneShot(gameOverAudio);
         yield return new WaitWhile(() => audioSource.isPlaying);
-        PlayerPrefs.SetFloat("x", transform.position.x);
-        PlayerPrefs.SetFloat("y", transform.position.y);
-        PlayerPrefs.SetFloat("z", transform.position.z);
+        playerPosition.position = transform.position;
         SceneManager.LoadScene("Result", LoadSceneMode.Additive);
     }
 

@@ -951,6 +951,12 @@ PrefabInstance:
       propertyPath: scoreText
       value: 
       objectReference: {fileID: 2108296946}
+    - target: {fileID: 6510506548155867905, guid: 3dfa30378f4a2184cba388893b749849,
+        type: 3}
+      propertyPath: playerPosition
+      value: 
+      objectReference: {fileID: 11400000, guid: 6b070905764997b40b6e640be9a364de,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3dfa30378f4a2184cba388893b749849, type: 3}
 --- !u!224 &7695319271945912360
