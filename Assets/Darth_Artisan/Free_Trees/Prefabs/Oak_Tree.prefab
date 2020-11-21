@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 3398346}
   - component: {fileID: 2340482}
   - component: {fileID: 3234975941017458350}
-  - component: {fileID: 8527903254235907906}
   - component: {fileID: -8201977316420749250}
+  - component: {fileID: 5458609601282933414}
+  - component: {fileID: 7991303800869697564}
   m_Layer: 0
   m_Name: Oak_Tree
   m_TagString: Untagged
@@ -96,20 +97,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitAudio: {fileID: 8300000, guid: cc591548c67d2be4cace8559706e9e4e, type: 3}
   waterAudio: {fileID: 8300000, guid: 567e72a8ff68eeb45b45063b6806974a, type: 3}
-  volumeScale: 1
---- !u!65 &8527903254235907906
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 191266}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.38, y: 4.8744946, z: 1.59}
-  m_Center: {x: 0.07000005, y: 2.49, z: -0.06}
 --- !u!82 &-8201977316420749250
 AudioSource:
   m_ObjectHideFlags: 0
@@ -206,3 +193,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!54 &5458609601282933414
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191266}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &7991303800869697564
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191266}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.99, y: 5.3144393, z: 1.75}
+  m_Center: {x: 0.04170281, y: 2.6472833, z: 0.096054934}

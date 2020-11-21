@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61a3aa03cf9441346a66369186e41bf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terrainPool: {fileID: 0}
+  terrainGenerator: {fileID: 0}
   jumpHeight: 0.5
   jumpDuration: 0.3
   moveDuration: 0.1

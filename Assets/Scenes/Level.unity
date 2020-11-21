@@ -943,19 +943,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6510506548155867905, guid: 3dfa30378f4a2184cba388893b749849,
         type: 3}
-      propertyPath: terrainPool
+      propertyPath: terrainGenerator
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1634724988}
     - target: {fileID: 6510506548155867905, guid: 3dfa30378f4a2184cba388893b749849,
         type: 3}
       propertyPath: scoreText
       value: 
       objectReference: {fileID: 2108296946}
-    - target: {fileID: 6510506548155867905, guid: 3dfa30378f4a2184cba388893b749849,
-        type: 3}
-      propertyPath: terrainGenerator
-      value: 
-      objectReference: {fileID: 1634724988}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3dfa30378f4a2184cba388893b749849, type: 3}
 --- !u!224 &7695319271945912360

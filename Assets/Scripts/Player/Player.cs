@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
 
     private AudioSource audioSource;
 
-    private bool isHopping;
+    public bool isHopping;
 
     private int score;
     private int coinsCount;
@@ -44,6 +44,10 @@ public class Player : MonoBehaviour
     private int sidesSteps;
 
     private bool isDied;
+
+    private Vector3 initialChildPosition;
+
+    public Vector3 currentDirection;
 
     public int zOffset;
 
@@ -55,6 +59,7 @@ public class Player : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         coinsCount = PlayerPrefs.GetInt("coins");
         isDied = false;
+        initialChildPosition = transform.GetChild(0).localPosition;
     }
     private void Update()
     {
@@ -62,9 +67,9 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.UpArrow) && !isHopping)
             {
+                currentDirection = new Vector3(1, 0, 0);
                 transform.DORotateQuaternion(Quaternion.Euler(0, 90, 0), 0);
-
-                MovePlayer(new Vector3(1, 0, 0));
+                MovePlayer(currentDirection);
 
                 terrainGenerator.GenerateTerrain(transform.position);
 
@@ -75,38 +80,46 @@ public class Player : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.LeftArrow) && !isHopping)
             {
+                currentDirection = new Vector3(0, 0, 1);
                 zOffset++;
                 transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0);
-                MovePlayer(new Vector3(0, 0, 1));
+                MovePlayer(currentDirection);
                 sidesSteps++;
                 CheckSteps(sidesSteps, 6);
+
                 backSteps = 0;
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow) && !isHopping)
             {
+                currentDirection = new Vector3(0, 0, -1);
                 zOffset--;
                 transform.DORotateQuaternion(Quaternion.Euler(0, 180, 0), 0);
-                MovePlayer(new Vector3(0, 0, -1));
+                MovePlayer(currentDirection);
                 sidesSteps++;
                 CheckSteps(sidesSteps, 6);
                 backSteps = 0;
+                MovePlayer(currentDirection);
+
             }
             else if (Input.GetKeyDown(KeyCode.DownArrow) && !isHopping)
             {
+                currentDirection = new Vector3(-1, 0, 0);
                 transform.DORotateQuaternion(Quaternion.Euler(0, -90, 0), 0);
                 backSteps++;
                 CheckSteps(backSteps, 3);
-                MovePlayer(new Vector3(-1, 0, 0));
+                MovePlayer(currentDirection);
                 sidesSteps = 0;
             }
         }
     }
 
-    private void MovePlayer(Vector3 translation)
+    public void MovePlayer(Vector3 translation)
     {
-        transform.GetChild(0).DOLocalJump(transform.GetChild(0).localPosition, jumpHeight, 1, jumpDuration)
+        var tw = transform.GetChild(0).DOLocalJump(initialChildPosition, jumpHeight, 1, jumpDuration)
             .OnComplete(() => isHopping = false);
+        
         audioSource.PlayOneShot(jumpAudio);
+
         transform.DOMove(transform.position + translation, moveDuration);
         isHopping = true;
     }
