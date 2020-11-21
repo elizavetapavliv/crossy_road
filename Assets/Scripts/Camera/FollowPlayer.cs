@@ -4,6 +4,9 @@ using UnityEngine;
 public class FollowPlayer : MonoBehaviour
 {
     [SerializeField]
+    private PlayerInfo playerInfo = default;
+
+    [SerializeField]
     private GameObject player = default;
 
     [SerializeField]
@@ -15,11 +18,15 @@ public class FollowPlayer : MonoBehaviour
     }
 
     private void Update()
-    { 
-        if (player != null && player.transform != null)
+    {
+        if (!playerInfo.isDied)
         {
             transform.DOMoveX(player.transform.position.x + offset.x, 0);
             transform.DOMoveZ(player.transform.position.z + offset.z, 0);
+        }
+        else
+        {
+            transform.DOKill();
         }
     }
 }

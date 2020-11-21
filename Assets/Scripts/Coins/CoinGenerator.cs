@@ -5,13 +5,13 @@ using UnityEngine;
 public class CoinGenerator : MonoBehaviour
 {
     [SerializeField]
-    private PlayerPosition playerPosition;
+    private PlayerInfo playerInfo = default;
 
     [SerializeField]
-    private int minCount;
+    private int minCount = default;
 
     [SerializeField]
-    private int maxCount;
+    private int maxCount = default;
 
     private List<Coin> coins;
 
@@ -20,15 +20,13 @@ public class CoinGenerator : MonoBehaviour
         coins = new List<Coin>();
         GenerateCoins();
     }
-
     private void Update()
     {
-        if (playerPosition.isDied)
+        if (playerInfo.isDied)
         {
             StopCoinsJumping();
         }
     }
-
     private void GenerateCoins()
     {
         var collider = GetComponent<Collider>();

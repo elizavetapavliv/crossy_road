@@ -4,13 +4,13 @@ using UnityEngine.UI;
 public class SoundButtonController : MonoBehaviour
 {
     [SerializeField]
-    private Sprite onSprite;
+    private Sprite onSprite = default;
 
     [SerializeField]
-    private Sprite offSprite;
+    private Sprite offSprite = default;
 
     [SerializeField]
-    private Button soundButton;
+    private Button soundButton = default;
 
     private void Start()
     {

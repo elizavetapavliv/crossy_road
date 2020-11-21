@@ -20,7 +20,6 @@ public class Coin : MonoBehaviour
 
     private void Start()
     {
-        needToJump = true;
         StartCoroutine("CoinJump");
     }
 
@@ -50,4 +49,3 @@ public class Coin : MonoBehaviour
         }
     }
 }
-

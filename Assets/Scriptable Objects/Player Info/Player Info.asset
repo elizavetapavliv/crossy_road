@@ -10,6 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c6e50c9f4a3c0248aaa4acf417932f8, type: 3}
-  m_Name: Player Position
+  m_Name: Player Info
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
+  position: {x: 14, y: 1.0000001, z: 1}
+  isDied: 0

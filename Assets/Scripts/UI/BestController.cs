@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class BestController : MonoBehaviour
 {
     [SerializeField]
-    private Text bestText;
+    private Text bestText = default;
 
     void Start()
     {

@@ -500,6 +500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8366783b35b3fd4c89b8e5474ac2c7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInfo: {fileID: 11400000, guid: 6b070905764997b40b6e640be9a364de, type: 2}
   player: {fileID: 1787950718}
   offset: {x: 1, y: 1, z: 0}
 --- !u!1 &1018498171
@@ -955,6 +956,12 @@ PrefabInstance:
     - target: {fileID: 6510506548155867905, guid: 3dfa30378f4a2184cba388893b749849,
         type: 3}
       propertyPath: playerPosition
+      value: 
+      objectReference: {fileID: 11400000, guid: 6b070905764997b40b6e640be9a364de,
+        type: 2}
+    - target: {fileID: 6510506548155867905, guid: 3dfa30378f4a2184cba388893b749849,
+        type: 3}
+      propertyPath: playerInfo
       value: 
       objectReference: {fileID: 11400000, guid: 6b070905764997b40b6e640be9a364de,
         type: 2}

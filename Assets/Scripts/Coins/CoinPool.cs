@@ -4,7 +4,7 @@ using UnityEngine;
 public class CoinPool : MonoBehaviour
 {
     [SerializeField]
-    private GameObject coinPrefab;
+    private GameObject coinPrefab = default;
 
     public int poolSize = default;
 

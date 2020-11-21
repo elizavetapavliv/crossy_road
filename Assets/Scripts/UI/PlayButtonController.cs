@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class PlayButtonController : MonoBehaviour
 {
     [SerializeField]
-    private Button playButton;
+    private Button playButton = default;
 
     private void Start()
     {

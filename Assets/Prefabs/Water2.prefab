@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb6f36081fae5b742af3c5e7d525942a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPosition: {fileID: 11400000, guid: 6b070905764997b40b6e640be9a364de, type: 2}
+  playerInfo: {fileID: 11400000, guid: 6b070905764997b40b6e640be9a364de, type: 2}
   minWaitingTime: 1.5
   maxWaitingTime: 3
   positionOnTerrain: {fileID: 5945570767532192796}

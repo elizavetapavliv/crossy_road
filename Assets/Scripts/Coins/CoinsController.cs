@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class CoinsController : MonoBehaviour
 {
     [SerializeField]
-    private Text coinsText;
+    private Text coinsText = default;
 
     private void Start()
     {

@@ -24,13 +24,13 @@ public class MovingObject : MonoBehaviour
 
     private Vector3 initialPosition;
 
+    private bool needToMove;
+
     public int direction;
 
     public bool isUsed;
 
     public float offset;
-
-    private bool needToMove;
 
     private void Start()
     {

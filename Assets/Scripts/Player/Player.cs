@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     private const int MAX_BACK_STEPS = 3;
 
     [SerializeField]
-    private PlayerPosition playerPosition = default;
+    private PlayerInfo playerInfo = default;
 
     [SerializeField]
     private TerrainGenerator terrainGenerator = default;
@@ -49,8 +49,6 @@ public class Player : MonoBehaviour
     private int backSteps;
     private int sidesSteps;
 
-    private bool isDied;
-
     private Vector3 initialChildPosition;
 
     private Vector2 startTouch;
@@ -61,18 +59,18 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        transform.DOKill();
         score = 0;
         backSteps = 0;
         zOffset = 0;
         audioSource = GetComponent<AudioSource>();
         coinsCount = PlayerPrefs.GetInt("coins");
-        isDied = false;
         initialChildPosition = transform.GetChild(0).localPosition;
-        playerPosition.isDied = false;
+        playerInfo.isDied = false;
     }
     private void Update()
     {
-        if (!isDied && Input.touchCount > 0 && !isHopping)
+        if (!playerInfo.isDied && Input.touchCount > 0 && !isHopping)
         {
             var touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Began)
@@ -156,10 +154,13 @@ public class Player : MonoBehaviour
 
     public void Die()
     {
-        isDied = true;
+        playerInfo.isDied = true;
+        playerInfo.position = transform.position;
+
         transform.DOScale(new Vector3(transform.localScale.x, transform.localScale.y, diedScale), 0);
-        transform.GetChild(0).DOKill();
         transform.DOComplete();
+
+        transform.GetChild(0).DOKill();
 
         SaveScoreAndCoins();
         if (!AudioListener.pause)
@@ -181,8 +182,7 @@ public class Player : MonoBehaviour
 
     private void LoadResultScene()
     {
-        playerPosition.isDied = true;
-        playerPosition.position = transform.position;
+        DOTween.KillAll();
         SceneManager.LoadScene("Result", LoadSceneMode.Additive);
     }
 
@@ -207,6 +207,7 @@ public class Player : MonoBehaviour
             if (z != roundZ)
             {
                 transform.DOMoveZ(roundZ, 0);
+
             }
         }
     }

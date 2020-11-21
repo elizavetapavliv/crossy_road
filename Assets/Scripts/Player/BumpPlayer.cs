@@ -4,10 +4,10 @@ using UnityEngine;
 public class BumpPlayer : MonoBehaviour
 {
     [SerializeField]
-    private AudioClip hitAudio;
+    private AudioClip hitAudio = default;
 
     [SerializeField]
-    private AudioClip waterAudio;
+    private AudioClip waterAudio = default;
 
     private AudioSource audioSource;
 

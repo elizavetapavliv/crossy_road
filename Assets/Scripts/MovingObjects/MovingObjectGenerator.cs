@@ -1,12 +1,11 @@
-﻿using DG.Tweening;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MovingObjectGenerator : MonoBehaviour
 {
     [SerializeField]
-    private PlayerPosition playerPosition;
+    private PlayerInfo playerInfo = default;
 
     [SerializeField]
     private float minWaitingTime = default;
@@ -29,7 +28,7 @@ public class MovingObjectGenerator : MonoBehaviour
 
     private IEnumerator ActivateMovingObject()
     {
-        while (!playerPosition.isDied)
+        while (!playerInfo.isDied)
         {
             var timeToWait = Random.Range(minWaitingTime, maxWaitingTime);
             yield return new WaitForSeconds(timeToWait);
@@ -42,11 +41,10 @@ public class MovingObjectGenerator : MonoBehaviour
                 movingObjects.Add(movingObject);
                 movingObject.gameObject.SetActive(true);
                 movingObject.offset = offset;
-                movingObject.transform.position = positionOnTerrain.position;
+                movingObject.transform.position = new Vector3(transform.position.x, 
+                    positionOnTerrain.position.y, positionOnTerrain.position.z);
                 movingObject.transform.eulerAngles = new Vector3(0, positionOnTerrain.localEulerAngles.y, 0);
                 movingObject.direction = positionOnTerrain.localEulerAngles.y == 90 ? -1 : 1;
-                movingObject.transform.DOMoveX(transform.position.x, 0);
-                movingObject.transform.DOComplete();
                 movingObject.StartMoving();
             }
         }
